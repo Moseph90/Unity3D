@@ -2415,9 +2415,9 @@ GameObject:
   m_Component:
   - component: {fileID: 4957605393579145646}
   - component: {fileID: 4957605393579145647}
-  - component: {fileID: -5364247527128636043}
   - component: {fileID: -4532150196445549471}
-  - component: {fileID: 5171200394565621279}
+  - component: {fileID: 7894242000272419665}
+  - component: {fileID: 7210270846439179371}
   m_Layer: 0
   m_Name: HumanMale_Character_Free
   m_TagString: Player
@@ -2464,33 +2464,6 @@ Animator:
   m_AllowConstantClipSamplingOptimization: 1
   m_KeepAnimatorStateOnDisable: 0
   m_WriteDefaultValuesOnDisable: 0
---- !u!54 &-5364247527128636043
-Rigidbody:
-  m_ObjectHideFlags: 0
-  m_CorrespondingSourceObject: {fileID: 0}
-  m_PrefabInstance: {fileID: 0}
-  m_PrefabAsset: {fileID: 0}
-  m_GameObject: {fileID: 4957605393579145644}
-  serializedVersion: 4
-  m_Mass: 5
-  m_Drag: 0
-  m_AngularDrag: 0.05
-  m_CenterOfMass: {x: 0, y: 0, z: 0}
-  m_InertiaTensor: {x: 1, y: 1, z: 1}
-  m_InertiaRotation: {x: 0, y: 0, z: 0, w: 1}
-  m_IncludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ExcludeLayers:
-    serializedVersion: 2
-    m_Bits: 0
-  m_ImplicitCom: 1
-  m_ImplicitTensor: 1
-  m_UseGravity: 1
-  m_IsKinematic: 0
-  m_Interpolate: 0
-  m_Constraints: 112
-  m_CollisionDetection: 0
 --- !u!114 &-4532150196445549471
 MonoBehaviour:
   m_ObjectHideFlags: 0
@@ -2503,8 +2476,34 @@ MonoBehaviour:
   m_Script: {fileID: 11500000, guid: feaddfc0874afaa409f23420896d4d75, type: 3}
   m_Name: 
   m_EditorClassIdentifier: 
---- !u!65 &5171200394565621279
-BoxCollider:
+--- !u!143 &7894242000272419665
+CharacterController:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 4957605393579145644}
+  m_Material: {fileID: 0}
+  m_IncludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_ExcludeLayers:
+    serializedVersion: 2
+    m_Bits: 0
+  m_LayerOverridePriority: 0
+  m_IsTrigger: 0
+  m_ProvidesContacts: 0
+  m_Enabled: 0
+  serializedVersion: 3
+  m_Height: 1.9
+  m_Radius: 0.3
+  m_SlopeLimit: 45
+  m_StepOffset: 0.3
+  m_SkinWidth: 0.08
+  m_MinMoveDistance: 0.001
+  m_Center: {x: 0, y: 0.9, z: 0}
+--- !u!136 &7210270846439179371
+CapsuleCollider:
   m_ObjectHideFlags: 0
   m_CorrespondingSourceObject: {fileID: 0}
   m_PrefabInstance: {fileID: 0}
@@ -2521,9 +2520,11 @@ BoxCollider:
   m_IsTrigger: 0
   m_ProvidesContacts: 0
   m_Enabled: 1
-  serializedVersion: 3
-  m_Size: {x: 0.76289296, y: 1.8158425, z: 0.37383756}
-  m_Center: {x: 0.00019049644, y: 0.91410214, z: -0.041150734}
+  serializedVersion: 2
+  m_Radius: 0.5
+  m_Height: 1
+  m_Direction: 1
+  m_Center: {x: 0, y: 0, z: 0}
 --- !u!1 &4957605393584318338
 GameObject:
   m_ObjectHideFlags: 0
