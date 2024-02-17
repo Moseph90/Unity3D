@@ -5,32 +5,35 @@ using UnityEngine;
 
 public abstract class Enemy : MonoBehaviour
 {
-    private int health = 10;
+    protected int health;
+    protected int maxHealth;
     protected Rigidbody rb;
     protected Animator anim;
     protected float deathDuration { set; get; }
 
-    protected void Damage(int value)
-    {
-        health -= value; 
-        StartCoroutine(DeathRoutine(deathDuration, this.anim));
-    }
+    protected EnemyHealth enemyHealth;
+
     protected virtual void Start()
     {
         rb = GetComponent<Rigidbody>();
         anim = GetComponent<Animator>();
-        
+
         if (!rb)
-        {
             Debug.Log("Rigidbody Not Found");
-        }
+    }
+    protected void Damage(int value)
+    {
+        health -= value;
+        this.enemyHealth.UpdateHealthBar(health, maxHealth);
+        if (health <= 0) 
+            StartCoroutine(DeathRoutine(deathDuration, this.anim));
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
         if (other.CompareTag("PlayerHit"))
-            Damage(10);
+            Damage(100);
         else if (other.CompareTag("PlayerProjectile"))
-            Damage(5);
+            Damage(50);
     }
     private IEnumerator DeathRoutine(float duration, Animator a)
     {

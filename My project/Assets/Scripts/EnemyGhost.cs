@@ -18,6 +18,12 @@ public class EnemyGhost : Enemy
         base.Start();
         anim = GetComponent<Animator>();
         rb = GetComponent<Rigidbody>();
+        enemyHealth = GetComponentInChildren<EnemyHealth>();
+
+        health = 100;
+        maxHealth = 100;
+
+        enemyHealth.UpdateHealthBar(health, maxHealth);
 
         if (!player) Debug.Log("Player is missing");
         deathDuration = DeathDuration;

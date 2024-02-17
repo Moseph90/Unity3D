@@ -25,13 +25,20 @@ public class PlayerController : MonoBehaviour
     private Scenes scenes;
 
     private int playerHealth;
+    private int playerMana;
+
+    public HealthBar healthBar;
+    public ManaBar manaBar;
 
     public static bool isAlive;
 
     // Start is called before the first frame update
     void Start()
     {
-        playerHealth = 10;
+        playerHealth = 100;
+        playerMana = 100;
+        healthBar.SetMaxHealth(playerHealth);
+        manaBar.SetMaxMana(playerMana);
         isAlive = true;
         try
         {
@@ -103,8 +110,14 @@ public class PlayerController : MonoBehaviour
         if (Input.GetKeyDown(KeyCode.LeftControl) && clipInfo[0].clip.name != "SpellCast")
         {
             anim.SetTrigger("SpellCast");
-            GameObject newProjectile = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
-            pc = newProjectile.GetComponent<ProjectileController>();
+            if (playerMana >= 20)
+            {
+                playerMana -= 20;
+                if (playerMana < 0) playerMana = 0;
+                manaBar.SetMana(playerMana);
+                GameObject newProjectile = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
+                pc = newProjectile.GetComponent<ProjectileController>();
+            }
         }
         if (clipInfo[0].clip.name == "SpellCast" && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f)
         {
@@ -121,7 +134,11 @@ public class PlayerController : MonoBehaviour
     {
         if (collision.gameObject.CompareTag("Enemy") && isAlive)
         {
-            playerHealth -= 2;
+            playerHealth -= 20;
+            if (playerHealth < 0) playerHealth = 0;
+
+            healthBar.SetHealth(playerHealth);
+
             if (playerHealth <= 0)
             {
                 isAlive = false;
