@@ -9,13 +9,13 @@ using UnityEngine;
 
 public class PlayerController : MonoBehaviour
 {
-    private CharacterController cc;
-    private Animator anim;
+    public CharacterController cc;
+    public Animator anim;
     private ProjectileController pc;
 
     public float speed;
     public float gravity = 9.81f;
-    public float jumpSpeed = 10.0f;
+    public float jumpSpeed = 3f;
     public float YVelocity;
     public float projectileSpeed;
     public LayerMask enemyCheck;
@@ -24,16 +24,18 @@ public class PlayerController : MonoBehaviour
 
     private Scenes scenes;
 
-    private int playerHealth;
+    public static int playerHealth;
     private int playerMana;
 
     public HealthBar healthBar;
     public ManaBar manaBar;
 
-    public static bool isAlive;
+    private PlayerInstance pi;
 
+    public static bool isAlive;
+    public static bool isSwimming;
     // Start is called before the first frame update
-    void Start()
+    private void Awake()
     {
         playerHealth = 100;
         playerMana = 100;
@@ -45,6 +47,7 @@ public class PlayerController : MonoBehaviour
             scenes = FindObjectOfType<Scenes>();
             cc = GetComponent<CharacterController>();
             anim = GetComponent<Animator>();
+            pi = GetComponent<PlayerInstance>();
 
             if (speed < 0) speed = 10;
                 throw new ArgumentException("Default Value has been set for speed");
@@ -58,8 +61,11 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update()
+    void Update() 
     {
+        healthBar.SetHealth(playerHealth);
+        if (playerHealth <= 0) Death();
+
         float hInput = Input.GetAxis("Horizontal");
         float fInput = Input.GetAxis("Vertical");
 
@@ -84,15 +90,25 @@ public class PlayerController : MonoBehaviour
                 transform.rotation = Quaternion.Slerp(transform.rotation, Quaternion.LookRotation(desiredMoveDirection), 1.0f);
 
             desiredMoveDirection *= speed * Time.deltaTime;
-            desiredMoveDirection.y -= gravity;
+            if (!isSwimming) desiredMoveDirection.y -= gravity;
 
             YVelocity = (!cc.isGrounded) ? YVelocity -= gravity * Time.deltaTime : 0;
 
             if (cc.isGrounded && Input.GetButtonDown("Jump")) YVelocity = jumpSpeed;
 
             desiredMoveDirection.y = YVelocity;
-
-            anim.SetFloat("Speed", dir.magnitude);
+            if (!isSwimming)
+            {
+                speed = 10;
+                anim.SetFloat("Speed", dir.magnitude);
+            }
+            else if (isSwimming)
+            {
+                anim.SetFloat("Speed", 0.3f);
+                speed = 5f;
+                desiredMoveDirection.y = 0;
+                //anim.SetFloat("SwimSpeed", dir.magnitude);
+            }
             cc.Move(desiredMoveDirection);
         }
         Vector3 higherPos = new Vector3(transform.position.x, transform.position.y + 4, transform.position.z);
@@ -106,28 +122,30 @@ public class PlayerController : MonoBehaviour
         {
             Debug.Log(hitInfo);
         }
-
-        if (Input.GetKeyDown(KeyCode.LeftControl) && clipInfo[0].clip.name != "SpellCast")
+        if (!isSwimming)
         {
-            anim.SetTrigger("SpellCast");
-            if (playerMana >= 20)
+            if (Input.GetKeyDown(KeyCode.LeftControl) && clipInfo[0].clip.name != "SpellCast")
             {
-                playerMana -= 20;
-                if (playerMana < 0) playerMana = 0;
-                manaBar.SetMana(playerMana);
-                GameObject newProjectile = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
-                pc = newProjectile.GetComponent<ProjectileController>();
+                anim.SetTrigger("SpellCast");
+                if (playerMana >= 20)
+                {
+                    playerMana -= 20;
+                    if (playerMana < 0) playerMana = 0;
+                    manaBar.SetMana(playerMana);
+                    GameObject newProjectile = Instantiate(projectile, spawnPoint.transform.position, Quaternion.identity);
+                    pc = newProjectile.GetComponent<ProjectileController>();
+                }
             }
+            if (clipInfo[0].clip.name == "SpellCast" && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f)
+            {
+                pc.SetDirection(transform.forward);
+                pc.projectileSpeed = projectileSpeed;
+            }
+            if (Input.GetKeyDown(KeyCode.RightControl) && clipInfo[0].clip.name != "Punch")
+                anim.SetTrigger("Punch");
+            if (Input.GetKeyDown(KeyCode.Return) && clipInfo[0].clip.name != "OverHandPunch")
+                anim.SetTrigger("OverHandPunch");
         }
-        if (clipInfo[0].clip.name == "SpellCast" && anim.GetCurrentAnimatorStateInfo(0).normalizedTime >= 0.7f)
-        {
-            pc.SetDirection(transform.forward);
-            pc.projectileSpeed = projectileSpeed;
-        }
-        if (Input.GetKeyDown(KeyCode.RightControl) && clipInfo[0].clip.name != "Punch")
-            anim.SetTrigger("Punch");
-        if (Input.GetKeyDown(KeyCode.Return) && clipInfo[0].clip.name != "OverHandPunch")
-            anim.SetTrigger("OverHandPunch");
     }
 
     private void OnCollisionEnter(Collision collision)
@@ -137,22 +155,21 @@ public class PlayerController : MonoBehaviour
             playerHealth -= 20;
             if (playerHealth < 0) playerHealth = 0;
 
-            healthBar.SetHealth(playerHealth);
-
-            if (playerHealth <= 0)
-            {
-                isAlive = false;
-                anim.SetFloat("Speed", 0);
-                anim.StopPlayback();
-                anim.SetTrigger("Death");
-                Invoke("GameOver", 3);
-            }
-            else anim.SetTrigger("Hit");
+            if (playerHealth > 0) anim.SetTrigger("Hit");
         }
     }
     private void GameOver()
     {
         Debug.Log("GameOver is being triggered");
         Scenes.GameOver();
+    }
+
+    public void Death()
+    {
+        isAlive = false;
+        anim.SetFloat("Speed", 0);
+        anim.StopPlayback();
+        anim.SetTrigger("Death");
+        Invoke("GameOver", 3);
     }
 }

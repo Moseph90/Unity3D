@@ -31,10 +31,10 @@ public class ProjectileController : MonoBehaviour
 
     private void OnTriggerEnter(Collider other)
     {
-        Debug.Log("Trigger Enter Called");
-        if (!other.CompareTag("Player"))
+        //Debug.Log("Trigger Enter Called");
+        if (!other.CompareTag("Player") && !other.CompareTag("Water") && !other.CompareTag("Fog"))
         {
-            Debug.Log("Projectile Has Collided");
+            //Debug.Log("Projectile Has Collided");
             Destroy(gameObject);
         }
     }

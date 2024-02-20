@@ -8,6 +8,15 @@ TagManager:
   - PlayerProjectile
   - PlayerHit
   - Enemy
+  - Water
+  - BlueFire
+  - GreenFire
+  - PinkFire
+  - PurpleFire
+  - YellowFire
+  - Fog
+  - PlayerHitAxe
+  - Lava
   layers:
   - Default
   - TransparentFX
@@ -16,7 +25,7 @@ TagManager:
   - Water
   - UI
   - EnemyGhost
-  - 
+  - Fire
   - 
   - 
   - 
