@@ -17,6 +17,9 @@ TagManager:
   - Fog
   - PlayerHitAxe
   - Lava
+  - DragonBody
+  - DragonHorn
+  - DragonDetect
   layers:
   - Default
   - TransparentFX

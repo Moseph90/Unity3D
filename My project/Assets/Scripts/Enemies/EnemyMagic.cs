@@ -6,39 +6,45 @@ using UnityEngine.AI;
 
 public class EnemyMagic : Enemy
 {
-    public float DeathDuration;
-    public float enemySpeed;
-    public float animTime;
-    public float rotationSpeed;
+    [SerializeField] private float DeathDuration;
+    [SerializeField] private float enemySpeed;
+    [SerializeField] private float animTime;
+    [SerializeField] private float rotationSpeed;
+
+    [SerializeField] private GameObject spawnPoint;
+    [SerializeField] private GameObject aura;
+    [SerializeField] private GameObject explosion;
+    private GameObject auraObj;
+    private GameObject explosionObj;
+
+    [SerializeField] private GameObject fireBall;
+    [SerializeField] private GameObject fireBallSpawn;
+    private GameObject fireBallObj;
 
     protected override void Start()
     {
         base.Start();
 
         UpdateHealth(200);
+        AgentInit();
         deathDuration = DeathDuration;
     }
 
-    private void Update()
+    protected override void Update()
     {
-        AnimatorClipInfo[] tempClipInfo = anim.GetCurrentAnimatorClipInfo(0);
-        AnimatorClipInfo clipInfo = default;
-
-        if (tempClipInfo.Length > 0)
-            clipInfo = tempClipInfo[0];
-
-        float dist = Vector3.Distance(transform.position, pc.transform.position);
+        base.Update();
 
         if (clipInfo.clip != null && clipInfo.clip.name != "Death" && clipInfo.clip.name != "Attack" 
-            && clipInfo.clip.name != "Burst" && PlayerController.isAlive && dist > 5 && dist < 50)
+            && clipInfo.clip.name != "Burst" && PlayerController.isAlive && dist < 50)
         {
-            Vector3 direction = pc.transform.position - transform.position;
-            Quaternion targetRotation = Quaternion.LookRotation(direction);
-            transform.rotation = Quaternion.Lerp(transform.rotation, targetRotation, rotationSpeed * Time.deltaTime);
+            if (dist >= 25)
+            {
+                Rotate(rotationSpeed);
 
-            agent.isStopped = false;
-            anim.CrossFade("Jog", animTime);
-            agent.SetDestination(pc.transform.position);
+                agent.isStopped = false;
+                anim.CrossFade("Jog", animTime);
+                agent.SetDestination(pc.transform.position);
+            }
 
             if (dist < 25 && dist > 10)
             {
@@ -48,17 +54,35 @@ public class EnemyMagic : Enemy
             }
             else if (dist <= 10)
             {
+
                 anim.CrossFade("Burst", animTime);
                 agent.isStopped = true;
             }
         }
-        if (clipInfo.clip != null && clipInfo.clip.name == "Attack")
-        {
-            transform.LookAt(pc.transform.position);
-        }
+        //if (clipInfo.clip != null && clipInfo.clip.name == "Attack")
+        //{
+        //    transform.LookAt(pc.transform.position);
+        //}
     }
     protected override void OnTriggerEnter(Collider other)
     {
         base.OnTriggerEnter(other);
+    }
+    private void CreateAura()
+    {
+        auraObj = Instantiate(aura, spawnPoint.transform.position, transform.rotation);
+    }
+    private void Explode()
+    {
+        Destroy(auraObj);
+        explosionObj = Instantiate(explosion, spawnPoint.transform.position, transform.rotation);
+    }
+    private void DestroyExplostion()
+    {
+        Destroy(explosionObj);
+    }
+    private void FireBall()
+    {
+        fireBallObj = Instantiate(fireBall, fireBallSpawn.transform.position, transform.rotation);
     }
 }

@@ -34,6 +34,7 @@ public class PlayerController : MonoBehaviour
 
     public static bool isAlive;
     public static bool isSwimming;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -64,8 +65,11 @@ public class PlayerController : MonoBehaviour
     void Update() 
     {
         healthBar.SetHealth(playerHealth);
-        if (playerHealth <= 0) Death();
-
+        if (playerHealth <= 0 && isAlive)
+        {
+            isAlive = false;
+            Death();
+        }
         float hInput = Input.GetAxis("Horizontal");
         float fInput = Input.GetAxis("Vertical");
 
@@ -99,7 +103,7 @@ public class PlayerController : MonoBehaviour
             desiredMoveDirection.y = YVelocity;
             if (!isSwimming)
             {
-                speed = 10;
+                speed = 15;
                 anim.SetFloat("Speed", dir.magnitude);
             }
             else if (isSwimming)
@@ -150,12 +154,15 @@ public class PlayerController : MonoBehaviour
 
     private void OnCollisionEnter(Collision collision)
     {
-        if (collision.gameObject.CompareTag("Enemy") && isAlive)
+        if (collision.gameObject.CompareTag("Enemy"))
         {
-            playerHealth -= 20;
-            if (playerHealth < 0) playerHealth = 0;
+            if (isAlive)
+            {
+                playerHealth -= 20;
+                if (playerHealth < 0) playerHealth = 0;
 
-            if (playerHealth > 0) anim.SetTrigger("Hit");
+                if (playerHealth > 0) anim.SetTrigger("Hit");
+            }
         }
     }
     private void GameOver()

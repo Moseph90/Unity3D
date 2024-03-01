@@ -26,8 +26,11 @@ public class PlayerInstance : MonoBehaviour
     private bool pushHit;
     private float time = 0;
 
+    [SerializeField] private GameObject Dragon;
+    private EnemyDragon dragon;
     private void Start()
     {
+        dragon = Dragon.GetComponent<EnemyDragon>();
         pc = GetComponent<PlayerController>();
         tempSpeed = pc.speed;
         tempAnimSpeed = pc.anim.speed;
@@ -70,6 +73,19 @@ public class PlayerInstance : MonoBehaviour
             lava = true;
             StartCoroutine(SlowDamage(10));
         }
+        if ((other.CompareTag("Enemy") || other.CompareTag("DragonHorn")))
+        {
+            PlayerController.playerHealth -= 20;
+            if (PlayerController.playerHealth < 0) PlayerController.playerHealth = 0;
+
+            if (PlayerController.playerHealth > 0) pc.anim.SetTrigger("Hit");
+        }
+        if (other.CompareTag("DragonDetect"))
+        {
+            dragon.sight = true;
+            StartCoroutine(dragon.Fight());
+            Debug.Log("Dragon Detect Working");
+        }
     }
 
     private void OnTriggerStay(Collider other)
@@ -92,6 +108,7 @@ public class PlayerInstance : MonoBehaviour
             lava = false;
             StopCoroutine(SlowDamage(10));
         }
+        if (other.CompareTag("DragonDetect")) dragon.sight = false;
     }
 
     private void LeftPunchCollider()
