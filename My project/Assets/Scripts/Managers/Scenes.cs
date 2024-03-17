@@ -12,6 +12,7 @@ public class Scenes : MonoBehaviour
     public Button quitButton;
     public Button mainMenuButton;
     public Button continueButton;
+    public Button loadButton;
 
     public GameObject pauseMenu;
 
@@ -27,6 +28,7 @@ public class Scenes : MonoBehaviour
         if (quitButton) quitButton.onClick.AddListener(QuitGame);
         if (mainMenuButton) mainMenuButton.onClick.AddListener(MainMenu);
         if (continueButton) continueButton.onClick.AddListener(Pause);
+        if (loadButton) loadButton.onClick.AddListener(StartGame);
     }
 
     // Update is called once per frame

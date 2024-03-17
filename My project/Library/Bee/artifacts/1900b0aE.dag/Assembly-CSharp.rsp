@@ -388,6 +388,8 @@
 "Assets/Scripts/PlayerController.cs"
 "Assets/Scripts/PlayerInstance.cs"
 "Assets/Scripts/ProjectileController.cs"
+"Assets/Scripts/Save/SaveData.cs"
+"Assets/Scripts/Save/SaveSystem.cs"
 "Assets/Scripts/Swim.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01.cs"
 "Assets/TextMesh Pro/Examples & Extras/Scripts/Benchmark01_UGUI.cs"

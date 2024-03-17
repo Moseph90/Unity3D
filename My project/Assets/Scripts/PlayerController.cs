@@ -25,7 +25,7 @@ public class PlayerController : MonoBehaviour
     private Scenes scenes;
 
     public static int playerHealth;
-    private int playerMana;
+    public static int playerMana;
 
     public HealthBar healthBar;
     public ManaBar manaBar;
@@ -34,6 +34,12 @@ public class PlayerController : MonoBehaviour
 
     public static bool isAlive;
     public static bool isSwimming;
+    public static bool load;
+
+    public static bool Load
+    {
+        set { load = value; }
+    }
 
     // Start is called before the first frame update
     private void Awake()
@@ -59,12 +65,23 @@ public class PlayerController : MonoBehaviour
             Debug.Log(e.ToString());
         }
         GameManager.Instance.TestGameManagers();
+        if (load)
+        {
+            load = false;
+            LoadPlayer();
+        }
     }
 
     // Update is called once per frame
     void Update() 
     {
+        if (playerHealth < 0) playerHealth = 0;
+        else if(playerHealth > 100) playerHealth = 100;
+        if (playerMana < 0) playerMana = 0;
+        else if (playerMana > 100) playerMana = 100;
         healthBar.SetHealth(playerHealth);
+        manaBar.SetMana(playerMana);
+            
         if (playerHealth <= 0 && isAlive)
         {
             isAlive = false;
@@ -178,5 +195,24 @@ public class PlayerController : MonoBehaviour
         anim.StopPlayback();
         anim.SetTrigger("Death");
         Invoke("GameOver", 3);
+    }
+
+    public void SavePlayer()
+    {
+        SaveSystem.SavePlayer(this);
+    }
+    public void LoadPlayer()
+    {
+        SaveData data = SaveSystem.LoadPlayer();
+
+        playerHealth = data.playerHealth;
+        playerMana = data.playerMana;
+
+        Vector3 position;
+        position.x = data.playerPosition[0];
+        position.y = data.playerPosition[1];
+        position.z = data.playerPosition[2];
+        
+        transform.position = position;
     }
 }

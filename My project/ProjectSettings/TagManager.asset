@@ -20,6 +20,7 @@ TagManager:
   - DragonBody
   - DragonHorn
   - DragonDetect
+  - Buff
   layers:
   - Default
   - TransparentFX

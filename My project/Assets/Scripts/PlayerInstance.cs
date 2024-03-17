@@ -10,7 +10,8 @@ public class PlayerInstance : MonoBehaviour
     public GameObject leftPunchCollider;
 
     [Header("SpawnPoints")]
-    public GameObject leftPunchSpawnPoint;
+    [SerializeField] private GameObject leftPunchSpawnPoint;
+    [SerializeField] private GameObject buffSpawnPoint;
 
     public float pushBackSpeed;
 
@@ -27,6 +28,7 @@ public class PlayerInstance : MonoBehaviour
     private float time = 0;
 
     [SerializeField] private GameObject Dragon;
+    [SerializeField] private GameObject Buff;
     private EnemyDragon dragon;
     private void Start()
     {
@@ -58,13 +60,13 @@ public class PlayerInstance : MonoBehaviour
         }
         if (LayerMask.LayerToName(other.gameObject.layer) == "Fire")
         {
-            pushHit = true;
             pc.anim.SetFloat("Speed", 0);
-            //if (other.CompareTag("BlueFire")) 
-            //{
-            //    StartCoroutine(PushBack("plusMana"));
-            //}
             if (other.CompareTag("GreenFire")) StartCoroutine(PushBack("Green"));
+            else if (other.CompareTag("BlueFire"))
+            {
+                Debug.Log("Blue On Trigger Enter");
+                StartCoroutine(PushBack("Blue"));
+            }
         }
  
         if (other.CompareTag("Lava"))
@@ -140,18 +142,21 @@ public class PlayerInstance : MonoBehaviour
             time = 0;
         }
     }
-    private IEnumerator PushBack(string tag)
+    private IEnumerator freeze()
     {
         PlayerController.isAlive = false;
-        
+        pc.speed -= tempSpeed;
+        yield return new WaitForSeconds(0.5f);
+        PlayerController.isAlive = true;
+        pc.speed += tempSpeed;
+    }
+    private IEnumerator PushBack(string tag)
+    {   
         if (tag == "Green" || tag == "Purple" || tag == "Pink" || tag == "Yellow")
         {
             pushBack = true;
-            PlayerController.isAlive = false;
-            pc.speed -= tempSpeed;
+            StartCoroutine(freeze());
             yield return new WaitForSeconds(0.5f);
-            PlayerController.isAlive = true;
-            pc.speed += tempSpeed;
             if (tag == "Green") 
             {
                 pc.anim.speed = 0.5f;
@@ -161,6 +166,15 @@ public class PlayerInstance : MonoBehaviour
                 pc.speed = tempSpeed;
                 yield return null;
             }
+        }
+        else if (tag == "Blue")
+        {
+            Debug.Log("Blue Fire Registered");
+            PlayerController.isAlive = false;
+            pc.anim.SetTrigger("Powerup");
+            PlayerController.playerMana += 25;
+            yield return new WaitForSeconds(1);
+            PlayerController.isAlive = true;
         }
     }
     private IEnumerator SlowDamage(int damage)
@@ -176,5 +190,17 @@ public class PlayerInstance : MonoBehaviour
             yield return null;
         }
         yield return null;
+    }
+
+    private void CreateBuff()
+    {
+        GameObject buffer = Instantiate(Buff, buffSpawnPoint.transform.position, Quaternion.identity);
+    }
+    private void DestroyBuff()
+    {
+        GameObject[] objectsToDestroy = GameObject.FindGameObjectsWithTag("Buff");
+
+        foreach (GameObject obj in objectsToDestroy)
+            Destroy(obj);
     }
 }
