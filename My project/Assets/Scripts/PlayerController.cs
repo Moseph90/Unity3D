@@ -148,6 +148,7 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.LeftControl) && clipInfo[0].clip.name != "SpellCast")
             {
                 anim.SetTrigger("SpellCast");
+                FindObjectOfType<AudioManager>().Play("PlayerCharge");
                 if (playerMana >= 20)
                 {
                     playerMana -= 20;
@@ -165,16 +166,36 @@ public class PlayerController : MonoBehaviour
             if (Input.GetKeyDown(KeyCode.RightControl) && clipInfo[0].clip.name != "Punch")
                 anim.SetTrigger("Punch");
             if (Input.GetKeyDown(KeyCode.Return) && clipInfo[0].clip.name != "OverHandPunch")
+            {
                 anim.SetTrigger("OverHandPunch");
+                FindObjectOfType<AudioManager>().Play("AxeSwing");
+            }
         }
     }
 
     private void OnCollisionEnter(Collision collision)
     {
+        int temp = UnityEngine.Random.Range(0, 3);
+
         if (collision.gameObject.CompareTag("Enemy"))
         {
             if (isAlive)
             {
+                switch (temp)
+                {
+                    case 0:
+                        FindObjectOfType<AudioManager>().Play("Hurt1");
+                        break;
+                    case 1:
+                        FindObjectOfType<AudioManager>().Play("Hurt2");
+                        break;
+                    case 2:
+                        FindObjectOfType<AudioManager>().Play("Hurt3");
+                        break;
+                    case 3:
+                        FindObjectOfType<AudioManager>().Play("Hurt4");
+                        break;
+                }
                 playerHealth -= 20;
                 if (playerHealth < 0) playerHealth = 0;
 

@@ -59,10 +59,8 @@ public class EnemyMagic : Enemy
                 agent.isStopped = true;
             }
         }
-        //if (clipInfo.clip != null && clipInfo.clip.name == "Attack")
-        //{
-        //    transform.LookAt(pc.transform.position);
-        //}
+        if (clipInfo.clip != null && (clipInfo.clip.name == "Attack" || clipInfo.clip.name == "Burst"))
+            transform.LookAt(pc.transform.position);
     }
     protected override void OnTriggerEnter(Collider other)
     {
@@ -71,11 +69,13 @@ public class EnemyMagic : Enemy
     private void CreateAura()
     {
         auraObj = Instantiate(aura, spawnPoint.transform.position, transform.rotation);
+        FindObjectOfType<AudioManager>().Play("EnemyCharge");
     }
     private void Explode()
     {
         Destroy(auraObj);
         explosionObj = Instantiate(explosion, spawnPoint.transform.position, transform.rotation);
+        FindObjectOfType<AudioManager>().Play("EnemyBurst");
     }
     private void DestroyExplostion()
     {
@@ -84,5 +84,6 @@ public class EnemyMagic : Enemy
     private void FireBall()
     {
         fireBallObj = Instantiate(fireBall, fireBallSpawn.transform.position, transform.rotation);
+        FindObjectOfType<AudioManager>().Play("ElectricAttack");
     }
 }

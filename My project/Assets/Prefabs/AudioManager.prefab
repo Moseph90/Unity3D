@@ -1,0 +1,312 @@
+%YAML 1.1
+%TAG !u! tag:unity3d.com,2011:
+--- !u!1 &954201063010776238
+GameObject:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  serializedVersion: 6
+  m_Component:
+  - component: {fileID: 8512075293875333721}
+  - component: {fileID: 9012893576696650300}
+  - component: {fileID: 6623255355668448163}
+  m_Layer: 0
+  m_Name: AudioManager
+  m_TagString: Untagged
+  m_Icon: {fileID: 0}
+  m_NavMeshLayer: 0
+  m_StaticEditorFlags: 0
+  m_IsActive: 1
+--- !u!4 &8512075293875333721
+Transform:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954201063010776238}
+  serializedVersion: 2
+  m_LocalRotation: {x: 0, y: 0, z: 0, w: 1}
+  m_LocalPosition: {x: -61.34059, y: -230.9666, z: 508.68628}
+  m_LocalScale: {x: 1, y: 1, z: 1}
+  m_ConstrainProportionsScale: 0
+  m_Children: []
+  m_Father: {fileID: 0}
+  m_LocalEulerAnglesHint: {x: 0, y: 0, z: 0}
+--- !u!114 &9012893576696650300
+MonoBehaviour:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954201063010776238}
+  m_Enabled: 1
+  m_EditorHideFlags: 0
+  m_Script: {fileID: 11500000, guid: 984e1cab996451544b2c6e08105b07f4, type: 3}
+  m_Name: 
+  m_EditorClassIdentifier: 
+  sounds:
+  - name: AxeHit
+    clip: {fileID: 8300000, guid: cd9df35ce5e56974ab6124b90834cff3, type: 3}
+    loop: 0
+    volume: 0.5
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: AxeSwing
+    clip: {fileID: 8300000, guid: 99b896cd39d010045ae686bff879a0b6, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: DragonFightMusic
+    clip: {fileID: 8300000, guid: 46d3ab035137f4a43852506d9e658010, type: 3}
+    loop: 1
+    volume: 0.492
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: DragonGrowl
+    clip: {fileID: 8300000, guid: 4d5f62e8af5399e43a162826de8b7994, type: 3}
+    loop: 0
+    volume: 0.508
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: DragonLanding
+    clip: {fileID: 8300000, guid: aa09a9a6301f6d5489dd1dd4ca661931, type: 3}
+    loop: 0
+    volume: 0.515
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: DragonRoar
+    clip: {fileID: 8300000, guid: 10e7803a8df499949996525a11a01447, type: 3}
+    loop: 0
+    volume: 0.577
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: DragonSwipe
+    clip: {fileID: 8300000, guid: 032c8c9cad39bcf45af29a07f4353625, type: 3}
+    loop: 0
+    volume: 1
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: ElectricAttack
+    clip: {fileID: 8300000, guid: 975756796fd36b643af2de7743874d29, type: 3}
+    loop: 0
+    volume: 0.4
+    pitch: 1.5
+    source: {fileID: 0}
+  - name: EnemyBurst
+    clip: {fileID: 8300000, guid: 3f995061bb6132a45b35be0786e15d53, type: 3}
+    loop: 0
+    volume: 0.531
+    pitch: 1.51
+    source: {fileID: 0}
+  - name: EnemyCharge
+    clip: {fileID: 8300000, guid: 5a75d71a45fe21a489367900c374dee6, type: 3}
+    loop: 0
+    volume: 0.515
+    pitch: 1.59
+    source: {fileID: 0}
+  - name: FireAttack
+    clip: {fileID: 8300000, guid: d17c1a6e7e7a56443a4393cd5e68171b, type: 3}
+    loop: 0
+    volume: 0.554
+    pitch: 1.51
+    source: {fileID: 0}
+  - name: FireHit
+    clip: {fileID: 8300000, guid: c895544992517c6478a72a48cd1eeb5d, type: 3}
+    loop: 0
+    volume: 0.576
+    pitch: 1.57
+    source: {fileID: 0}
+  - name: Fog
+    clip: {fileID: 8300000, guid: 2d413e6f883b73543a35ba7bada3bf31, type: 3}
+    loop: 1
+    volume: 0.477
+    pitch: 1.59
+    source: {fileID: 0}
+  - name: HornAttack
+    clip: {fileID: 8300000, guid: bed577dabb515cd4ea274956f06df918, type: 3}
+    loop: 0
+    volume: 0.523
+    pitch: 1.62
+    source: {fileID: 0}
+  - name: Hurt1
+    clip: {fileID: 8300000, guid: e0758ff80c056b340a230d499305f7fd, type: 3}
+    loop: 0
+    volume: 0.492
+    pitch: 1
+    source: {fileID: 0}
+  - name: Hurt2
+    clip: {fileID: 8300000, guid: f21190f147cfab440a34ad66a3abf27f, type: 3}
+    loop: 0
+    volume: 0.515
+    pitch: 0.857
+    source: {fileID: 0}
+  - name: Hurt3
+    clip: {fileID: 8300000, guid: c1f71d33d39cad249b289370083e763d, type: 3}
+    loop: 0
+    volume: 0.508
+    pitch: 1.57
+    source: {fileID: 0}
+  - name: Hurt4
+    clip: {fileID: 8300000, guid: 764e207898f70354f87017710005db90, type: 3}
+    loop: 0
+    volume: 0.494
+    pitch: 1.53
+    source: {fileID: 0}
+  - name: MagicEnemyDeath
+    clip: {fileID: 8300000, guid: b06b554d79ed19f4ebb30ba6d16dc458, type: 3}
+    loop: 0
+    volume: 0.492
+    pitch: 1.55
+    source: {fileID: 0}
+  - name: MenuClick
+    clip: {fileID: 8300000, guid: e5f0392c0429674478864d746af29ccc, type: 3}
+    loop: 0
+    volume: 0.509
+    pitch: 1.58
+    source: {fileID: 0}
+  - name: PlayerCharge
+    clip: {fileID: 8300000, guid: b9c29f637c8fa274781454d988d1c840, type: 3}
+    loop: 0
+    volume: 0.517
+    pitch: 1.6
+    source: {fileID: 0}
+  - name: Powerup1
+    clip: {fileID: 8300000, guid: c1359099a931c0542915f918e5c01fbb, type: 3}
+    loop: 0
+    volume: 0.094
+    pitch: 1.55
+    source: {fileID: 0}
+  - name: Powerup2
+    clip: {fileID: 8300000, guid: 44afe71513f08844c972fbbf5b262287, type: 3}
+    loop: 0
+    volume: 0.117
+    pitch: 1
+    source: {fileID: 0}
+  - name: PunchHit
+    clip: {fileID: 8300000, guid: 16acae142dd68cb4f9dc5aae2bc38db3, type: 3}
+    loop: 0
+    volume: 0.508
+    pitch: 1
+    source: {fileID: 0}
+  - name: PunchSound
+    clip: {fileID: 8300000, guid: cd68eda18cedd8a42b917c52fc3a6f5b, type: 3}
+    loop: 0
+    volume: 0.492
+    pitch: 1.53
+    source: {fileID: 0}
+  - name: Swim
+    clip: {fileID: 8300000, guid: f3e996d62baed1341bbeb4c94154bcf6, type: 3}
+    loop: 0
+    volume: 0.5
+    pitch: 1.48
+    source: {fileID: 0}
+  - name: ZombieAttack
+    clip: {fileID: 8300000, guid: 16709a553c23f1a4a932ec7be7839f7f, type: 3}
+    loop: 0
+    volume: 0.5
+    pitch: 0.5
+    source: {fileID: 0}
+  - name: ZombieDeath
+    clip: {fileID: 8300000, guid: b0819ad5481041e46b0fbda67d29b15f, type: 3}
+    loop: 0
+    volume: 0.508
+    pitch: 1.48
+    source: {fileID: 0}
+--- !u!82 &6623255355668448163
+AudioSource:
+  m_ObjectHideFlags: 0
+  m_CorrespondingSourceObject: {fileID: 0}
+  m_PrefabInstance: {fileID: 0}
+  m_PrefabAsset: {fileID: 0}
+  m_GameObject: {fileID: 954201063010776238}
+  m_Enabled: 1
+  serializedVersion: 4
+  OutputAudioMixerGroup: {fileID: 0}
+  m_audioClip: {fileID: 8300000, guid: 32a1e48e73718274585d95e4b0d8a890, type: 3}
+  m_PlayOnAwake: 1
+  m_Volume: 0.049
+  m_Pitch: 1
+  Loop: 1
+  Mute: 0
+  Spatialize: 0
+  SpatializePostEffects: 0
+  Priority: 128
+  DopplerLevel: 1
+  MinDistance: 1
+  MaxDistance: 500
+  Pan2D: 0
+  rolloffMode: 0
+  BypassEffects: 0
+  BypassListenerEffects: 0
+  BypassReverbZones: 0
+  rolloffCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    - serializedVersion: 3
+      time: 1
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  panLevelCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  spreadCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 0
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4
+  reverbZoneMixCustomCurve:
+    serializedVersion: 2
+    m_Curve:
+    - serializedVersion: 3
+      time: 0
+      value: 1
+      inSlope: 0
+      outSlope: 0
+      tangentMode: 0
+      weightedMode: 0
+      inWeight: 0.33333334
+      outWeight: 0.33333334
+    m_PreInfinity: 2
+    m_PostInfinity: 2
+    m_RotationOrder: 4

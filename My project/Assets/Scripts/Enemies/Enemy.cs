@@ -34,7 +34,7 @@ public abstract class Enemy : MonoBehaviour
 
     protected virtual void Update()
     {
-        if (active)
+        if (this.active)
         {
             this.tempClipInfo = this.anim.GetCurrentAnimatorClipInfo(0);
             this.clipInfo = default;
@@ -47,25 +47,56 @@ public abstract class Enemy : MonoBehaviour
     }
     protected void Damage(int value)
     {
-        this.health -= value;
-        this.enemyHealth.UpdateHealthBar(this.health, this.maxHealth);
-        if (this.health <= 0) 
-            StartCoroutine(DeathRoutine(deathDuration));
+        AudioSource audio = GetComponent<AudioSource>();
+        if (this.active)
+        {
+            this.health -= value;
+            this.enemyHealth.UpdateHealthBar(this.health, this.maxHealth);
+            if (this.health <= 0)
+            {
+                switch (this.maxHealth)
+                {
+                    case 100:
+                        StartCoroutine(DeathRoutine(deathDuration, "Zombie"));
+                        break;
+                    case 200:
+                        StartCoroutine(DeathRoutine(deathDuration, "Magic"));
+                        break;
+                    case 500:
+                        StartCoroutine(DeathRoutine(deathDuration, "Dragon"));
+                        if (audio) audio.Stop(); 
+                        break;
+                }
+            }
+        }
     }
     protected virtual void OnTriggerEnter(Collider other)
     {
-        if (other.CompareTag("PlayerHit") || other.CompareTag("PlayerHitAxe"))
-            Damage(100);
-        else if (other.CompareTag("PlayerProjectile"))
-            Damage(50);
+        if (this.active)
+        {
+            if (other.CompareTag("PlayerHit") || other.CompareTag("PlayerHitAxe"))
+            {
+                if (other.CompareTag("PlayerHit")) FindObjectOfType<AudioManager>().Play("PunchHit");
+                else FindObjectOfType<AudioManager>().Play("AxeHit");
+                Damage(100);
+            }
+            else if (other.CompareTag("PlayerProjectile"))
+            {
+                FindObjectOfType<AudioManager>().Play("FireHit");
+                Damage(50);
+            }
+        }
     }
-    private IEnumerator DeathRoutine(float duration)
+    private IEnumerator DeathRoutine(float duration, string enemy)
     {
         this.active = false;
         if (this.health <= 0)
         {
             if (this.anim)
             {
+                if (enemy == "Zombie") FindObjectOfType<AudioManager>().Play("ZombieDeath");
+                else if (enemy == "Magic") FindObjectOfType<AudioManager>().Play("MagicEnemyDeath");
+                else if (enemy == "Dragon") FindObjectOfType<AudioManager>().Play("DragonRoar");
                 Debug.Log("Playing death animation...");
                 this.anim.StopPlayback();
                 this.anim.CrossFade("Death", 0.5f);
@@ -74,12 +105,14 @@ public abstract class Enemy : MonoBehaviour
             Destroy(gameObject);
         }
     }
-
     protected void UpdateHealth(int value)
     {
-        this.health = value;
-        this.maxHealth = value;
-        this.enemyHealth.UpdateHealthBar(health, maxHealth);
+        if (this.gameObject)
+        {
+            this.health = value;
+            this.maxHealth = value;
+            this.enemyHealth.UpdateHealthBar(health, maxHealth);
+        }
     }
     protected void Rotate(float speed)
     {
@@ -90,11 +123,14 @@ public abstract class Enemy : MonoBehaviour
             this.transform.rotation = Quaternion.Lerp(this.transform.rotation, targetRotation, speed * Time.deltaTime);
         }
     }
-
     protected bool IsTargetObjectInFront()
     {
-        float angle = Vector3.Angle(this.transform.forward, pc.transform.forward);
-        return angle < 45.0f;
+        if (this.gameObject)
+        {
+            float angle = Vector3.Angle(this.transform.forward, pc.transform.forward);
+            return angle < 45.0f;
+        }
+        else return false;
     }
     protected void AgentInit()
     {

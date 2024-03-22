@@ -1,10 +1,12 @@
 using System.Collections;
 using System.Collections.Generic;
+using Unity.IO.LowLevel.Unsafe;
 using Unity.VisualScripting;
 using UnityEngine;
 
 public class ProjectileController : MonoBehaviour
 {
+    bool fire;
     private float _projectileSpeed;
     public float projectileSpeed
     {
@@ -21,6 +23,11 @@ public class ProjectileController : MonoBehaviour
     {
         //Debug.Log("Direction is set " + direction);
         moveDirection = direction.normalized;
+        if (!fire)
+        {
+            fire = true;
+            FindObjectOfType<AudioManager>().Play("FireAttack");
+        }
     }
 
     void FixedUpdate()
@@ -36,6 +43,7 @@ public class ProjectileController : MonoBehaviour
             && !other.CompareTag("Fog") && !other.CompareTag("DragonDetect"))
         {
             //Debug.Log("Projectile Has Collided");
+            FindObjectOfType<AudioManager>().Play("FireHit");
             Destroy(gameObject);
         }
     }

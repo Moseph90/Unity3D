@@ -77,6 +77,22 @@ public class PlayerInstance : MonoBehaviour
         }
         if ((other.CompareTag("Enemy") || other.CompareTag("DragonHorn")))
         {
+            int temp = UnityEngine.Random.Range(0, 3);
+            switch (temp)
+            {
+                case 0:
+                    FindObjectOfType<AudioManager>().Play("Hurt1");
+                    break;
+                case 1:
+                    FindObjectOfType<AudioManager>().Play("Hurt2");
+                    break;
+                case 2:
+                    FindObjectOfType<AudioManager>().Play("Hurt2");
+                    break;
+                case 3:
+                    FindObjectOfType<AudioManager>().Play("Hurt2");
+                    break;
+            }
             PlayerController.playerHealth -= 20;
             if (PlayerController.playerHealth < 0) PlayerController.playerHealth = 0;
 
@@ -87,6 +103,11 @@ public class PlayerInstance : MonoBehaviour
             dragon.sight = true;
             StartCoroutine(dragon.Fight());
             Debug.Log("Dragon Detect Working");
+        }
+        if (other.CompareTag("Fog"))
+        {
+            FindObjectOfType<AudioManager>().Stop("WindAmbience");
+            FindObjectOfType<AudioManager>().Play("Fog");
         }
     }
 
@@ -104,6 +125,8 @@ public class PlayerInstance : MonoBehaviour
         {
             pc.speed = tempSpeed;
             pc.anim.speed = tempAnimSpeed;
+            FindObjectOfType<AudioManager>().Stop("Fog");
+            FindObjectOfType<AudioManager>().Play("WindAmbience");
         }
         if (other.CompareTag("Lava"))
         {
@@ -116,6 +139,7 @@ public class PlayerInstance : MonoBehaviour
     private void LeftPunchCollider()
     {
         GameObject collider = Instantiate(leftPunchCollider, leftPunchSpawnPoint.transform.position, Quaternion.identity);
+        FindObjectOfType<AudioManager>().Play("PunchSound");
     }
     private void DisableCollider()
     {
@@ -181,10 +205,26 @@ public class PlayerInstance : MonoBehaviour
     {
         while (lava)
         {
+            int temp = UnityEngine.Random.Range(0, 3);
             if (PlayerController.isAlive)
             {
                 PlayerController.playerHealth -= damage;
                 pc.anim.SetTrigger("Hit");
+                switch (temp)
+                {
+                    case 0:
+                        FindObjectOfType<AudioManager>().Play("Hurt1");
+                        break;
+                    case 1:
+                        FindObjectOfType<AudioManager>().Play("Hurt2");
+                        break;
+                    case 2:
+                        FindObjectOfType<AudioManager>().Play("Hurt2");
+                        break;
+                    case 3:
+                        FindObjectOfType<AudioManager>().Play("Hurt2");
+                        break;
+                }
                 yield return new WaitForSeconds(2);
             }
             yield return null;
@@ -195,6 +235,8 @@ public class PlayerInstance : MonoBehaviour
     private void CreateBuff()
     {
         GameObject buffer = Instantiate(Buff, buffSpawnPoint.transform.position, Quaternion.identity);
+        FindObjectOfType<AudioManager>().Play("Powerup1");
+        FindObjectOfType<AudioManager>().Play("Powerup2");
     }
     private void DestroyBuff()
     {
