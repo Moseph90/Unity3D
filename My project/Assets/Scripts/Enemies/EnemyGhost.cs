@@ -51,7 +51,7 @@ public class EnemyGhost : Enemy
             anim.CrossFade("Attack", animTime);
             FindObjectOfType<AudioManager>().Play("ZombieAttack");
             Vector3 moveDirection = pc.gameObject.transform.position;
-            transform.position = Vector3.Lerp(transform.position, moveDirection, (enemySpeed) * Time.deltaTime);
+            transform.position = Vector3.Lerp(transform.position, moveDirection, enemySpeed * Time.deltaTime);
         }
     }
 

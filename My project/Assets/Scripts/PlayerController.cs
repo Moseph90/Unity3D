@@ -12,6 +12,7 @@ public class PlayerController : MonoBehaviour
     public CharacterController cc;
     public Animator anim;
     private ProjectileController pc;
+    private CameraController cam;
 
     public float speed;
     public float gravity = 9.81f;
@@ -52,6 +53,7 @@ public class PlayerController : MonoBehaviour
         try
         {
             scenes = FindObjectOfType<Scenes>();
+            cam = FindObjectOfType<CameraController>();
             cc = GetComponent<CharacterController>();
             anim = GetComponent<Animator>();
             pi = GetComponent<PlayerInstance>();
@@ -73,15 +75,15 @@ public class PlayerController : MonoBehaviour
     }
 
     // Update is called once per frame
-    void Update() 
+    void Update()
     {
         if (playerHealth < 0) playerHealth = 0;
-        else if(playerHealth > 100) playerHealth = 100;
+        else if (playerHealth > 100) playerHealth = 100;
         if (playerMana < 0) playerMana = 0;
         else if (playerMana > 100) playerMana = 100;
         healthBar.SetHealth(playerHealth);
         manaBar.SetMana(playerMana);
-            
+
         if (playerHealth <= 0 && isAlive)
         {
             isAlive = false;
@@ -145,7 +147,7 @@ public class PlayerController : MonoBehaviour
         }
         if (!isSwimming)
         {
-            if (Input.GetKeyDown(KeyCode.LeftControl) && clipInfo[0].clip.name != "SpellCast")
+            if ((Input.GetKeyDown(KeyCode.LeftControl) || Input.GetKeyDown(KeyCode.F)) && clipInfo[0].clip.name != "SpellCast")
             {
                 anim.SetTrigger("SpellCast");
                 FindObjectOfType<AudioManager>().Play("PlayerCharge");
@@ -163,16 +165,15 @@ public class PlayerController : MonoBehaviour
                 pc.SetDirection(transform.forward);
                 pc.projectileSpeed = projectileSpeed;
             }
-            if (Input.GetKeyDown(KeyCode.RightControl) && clipInfo[0].clip.name != "Punch")
+            if ((Input.GetKeyDown(KeyCode.RightControl) || Input.GetMouseButtonDown(0)) && clipInfo[0].clip.name != "Punch")
                 anim.SetTrigger("Punch");
-            if (Input.GetKeyDown(KeyCode.Return) && clipInfo[0].clip.name != "OverHandPunch")
+            if ((Input.GetKeyDown(KeyCode.Return) || Input.GetMouseButtonDown(1)) && clipInfo[0].clip.name != "OverHandPunch")
             {
                 anim.SetTrigger("OverHandPunch");
                 FindObjectOfType<AudioManager>().Play("AxeSwing");
             }
         }
     }
-
     private void OnCollisionEnter(Collision collision)
     {
         int temp = UnityEngine.Random.Range(0, 3);

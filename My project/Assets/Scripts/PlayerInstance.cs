@@ -27,6 +27,9 @@ public class PlayerInstance : MonoBehaviour
     private bool pushHit;
     private float time = 0;
 
+    private bool swimming;
+    private bool startRoutine;
+
     [SerializeField] private GameObject Dragon;
     [SerializeField] private GameObject Buff;
     private EnemyDragon dragon;
@@ -68,7 +71,12 @@ public class PlayerInstance : MonoBehaviour
                 StartCoroutine(PushBack("Blue"));
             }
         }
- 
+        if (other.CompareTag("Water"))
+        {
+            swimming = true;
+            StartCoroutine(SwimSound());
+        }
+
         if (other.CompareTag("Lava"))
         {
             Debug.Log("Lava has been collided with");
@@ -127,6 +135,8 @@ public class PlayerInstance : MonoBehaviour
             pc.anim.speed = tempAnimSpeed;
             FindObjectOfType<AudioManager>().Stop("Fog");
             FindObjectOfType<AudioManager>().Play("WindAmbience");
+            if (other.CompareTag("Water"))
+                swimming = false;
         }
         if (other.CompareTag("Lava"))
         {
@@ -232,6 +242,16 @@ public class PlayerInstance : MonoBehaviour
         yield return null;
     }
 
+    private IEnumerator SwimSound()
+    {
+        Debug.Log("SwimSound Is Working");
+        while (swimming)
+        {
+            FindObjectOfType<AudioManager>().Play("Swim");
+            yield return new WaitForSeconds(2);
+        }
+        yield return null;
+    }
     private void CreateBuff()
     {
         GameObject buffer = Instantiate(Buff, buffSpawnPoint.transform.position, Quaternion.identity);
@@ -244,5 +264,9 @@ public class PlayerInstance : MonoBehaviour
 
         foreach (GameObject obj in objectsToDestroy)
             Destroy(obj);
+    }
+    private void PlayStep()
+    {
+        FindObjectOfType<AudioManager>().Play("Step");
     }
 }

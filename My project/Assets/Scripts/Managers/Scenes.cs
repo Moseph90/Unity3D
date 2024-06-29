@@ -41,17 +41,20 @@ public class Scenes : MonoBehaviour
 
     private void StartGame()
     {
+        FindObjectOfType<AudioManager>().Play("MenuClick");
         if (SceneManager.GetActiveScene().name != "GameScene")
             SceneManager.LoadScene("GameScene");
     }
 
     private void QuitGame()
     {
+        FindObjectOfType<AudioManager>().Play("MenuClick");
         GameManager.Instance.Quit();
     }
 
     private void MainMenu()
     {
+        FindObjectOfType<AudioManager>().Play("MenuClick");
         if (SceneManager.GetActiveScene().name != "MainMenu")
             SceneManager.LoadScene("MainMenu");
     }
@@ -70,6 +73,7 @@ public class Scenes : MonoBehaviour
 
     private void Pause()
     {
+        FindObjectOfType<AudioManager>().Play("Pause");
         pauseMenu.SetActive(!pauseMenu.activeSelf);
 
         if (pauseMenu.activeSelf)

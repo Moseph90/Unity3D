@@ -7,6 +7,8 @@ public class AudioManager : MonoBehaviour
     public Sound[] sounds;
     public static AudioManager instance;
 
+    private AudioSource source;
+
     // Start is called before the first frame update
     private void Awake()
     {
@@ -27,6 +29,7 @@ public class AudioManager : MonoBehaviour
             sound.source.pitch = sound.pitch;
             sound.source.loop = sound.loop;
         }
+        FindObjectOfType<AudioManager>().Play("WindAmbience");
     }
 
     public void Play(string name)
@@ -45,7 +48,7 @@ public class AudioManager : MonoBehaviour
         Sound sound = Array.Find(sounds, sound => sound.name == name);
         if (sound == null)
         {
-            Debug.Log("Stop: Sound '" + name + "' not found");
+            Debug.Log("Stop: Sound '" + name + "' Not Found");
             return;
         }
         sound.source.Stop();

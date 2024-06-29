@@ -30,7 +30,12 @@ public class EnemyDragon : Enemy
     protected override void Update()
     {
         base.Update();
-        if (sight && active) Rotate(rotationSpeed);
+        if (sight && active)
+        {
+            Rotate(rotationSpeed);
+            if (dist > 20)
+                transform.position = Vector3.Lerp(transform.position, pc.transform.position, Time.deltaTime * 0.1f);
+        }
     }
 
     public IEnumerator Fight()
@@ -55,7 +60,7 @@ public class EnemyDragon : Enemy
                 }
                 //yield return null;
                 int clip = UnityEngine.Random.Range(1, 2);
-                if (dist > 20 && active)
+                if (dist > 15 && active)
                 {
                     anim.CrossFade("Horn Attack", animSpeed);
                     FindObjectOfType<AudioManager>().Play("HornAttack");
@@ -73,7 +78,7 @@ public class EnemyDragon : Enemy
                         FindObjectOfType<AudioManager>().Play("DragonGrowl");
                     }
                 }
-                else if (dist < 10 && active) anim.CrossFade("Jump", animSpeed);
+                else if (dist <= 10 && active) anim.CrossFade("Jump", animSpeed);
                 //yield return null;
                 yield return new WaitForSeconds(4);
             }

@@ -98,37 +98,37 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: 3f995061bb6132a45b35be0786e15d53, type: 3}
     loop: 0
     volume: 0.531
-    pitch: 1.51
+    pitch: 1
     source: {fileID: 0}
   - name: EnemyCharge
     clip: {fileID: 8300000, guid: 5a75d71a45fe21a489367900c374dee6, type: 3}
     loop: 0
     volume: 0.515
-    pitch: 1.59
+    pitch: 1
     source: {fileID: 0}
   - name: FireAttack
     clip: {fileID: 8300000, guid: d17c1a6e7e7a56443a4393cd5e68171b, type: 3}
     loop: 0
     volume: 0.554
-    pitch: 1.51
+    pitch: 1
     source: {fileID: 0}
   - name: FireHit
     clip: {fileID: 8300000, guid: c895544992517c6478a72a48cd1eeb5d, type: 3}
     loop: 0
     volume: 0.576
-    pitch: 1.57
+    pitch: 1
     source: {fileID: 0}
   - name: Fog
     clip: {fileID: 8300000, guid: 2d413e6f883b73543a35ba7bada3bf31, type: 3}
     loop: 1
     volume: 0.477
-    pitch: 1.59
+    pitch: 1
     source: {fileID: 0}
   - name: HornAttack
     clip: {fileID: 8300000, guid: bed577dabb515cd4ea274956f06df918, type: 3}
     loop: 0
     volume: 0.523
-    pitch: 1.62
+    pitch: 1
     source: {fileID: 0}
   - name: Hurt1
     clip: {fileID: 8300000, guid: e0758ff80c056b340a230d499305f7fd, type: 3}
@@ -146,37 +146,37 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: c1f71d33d39cad249b289370083e763d, type: 3}
     loop: 0
     volume: 0.508
-    pitch: 1.57
+    pitch: 1
     source: {fileID: 0}
   - name: Hurt4
     clip: {fileID: 8300000, guid: 764e207898f70354f87017710005db90, type: 3}
     loop: 0
     volume: 0.494
-    pitch: 1.53
+    pitch: 1
     source: {fileID: 0}
   - name: MagicEnemyDeath
     clip: {fileID: 8300000, guid: b06b554d79ed19f4ebb30ba6d16dc458, type: 3}
     loop: 0
     volume: 0.492
-    pitch: 1.55
+    pitch: 1
     source: {fileID: 0}
   - name: MenuClick
     clip: {fileID: 8300000, guid: e5f0392c0429674478864d746af29ccc, type: 3}
     loop: 0
     volume: 0.509
-    pitch: 1.58
+    pitch: 1
     source: {fileID: 0}
   - name: PlayerCharge
     clip: {fileID: 8300000, guid: b9c29f637c8fa274781454d988d1c840, type: 3}
     loop: 0
     volume: 0.517
-    pitch: 1.6
+    pitch: 1
     source: {fileID: 0}
   - name: Powerup1
     clip: {fileID: 8300000, guid: c1359099a931c0542915f918e5c01fbb, type: 3}
     loop: 0
     volume: 0.094
-    pitch: 1.55
+    pitch: 1
     source: {fileID: 0}
   - name: Powerup2
     clip: {fileID: 8300000, guid: 44afe71513f08844c972fbbf5b262287, type: 3}
@@ -194,13 +194,19 @@ MonoBehaviour:
     clip: {fileID: 8300000, guid: cd68eda18cedd8a42b917c52fc3a6f5b, type: 3}
     loop: 0
     volume: 0.492
-    pitch: 1.53
+    pitch: 1
+    source: {fileID: 0}
+  - name: Step
+    clip: {fileID: 8300000, guid: 7a66a81d8055abe4c9623f11b5610dc1, type: 3}
+    loop: 0
+    volume: 0.293
+    pitch: 0.631
     source: {fileID: 0}
   - name: Swim
     clip: {fileID: 8300000, guid: f3e996d62baed1341bbeb4c94154bcf6, type: 3}
     loop: 0
     volume: 0.5
-    pitch: 1.48
+    pitch: 1
     source: {fileID: 0}
   - name: ZombieAttack
     clip: {fileID: 8300000, guid: 16709a553c23f1a4a932ec7be7839f7f, type: 3}
